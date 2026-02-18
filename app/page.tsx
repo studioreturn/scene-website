@@ -34,7 +34,7 @@ export default function HomePage() {
         <section className="max-w-6xl mx-auto px-4 sm:px-6 py-24 border-t border-scene-border">
           <div className="flex flex-col items-center gap-6 text-center">
             <p className="text-scene-muted text-sm font-medium tracking-wide uppercase">
-              Free to download. Bristol-made.
+              Free to download. Bristol-built.
             </p>
             <AppStoreButton />
           </div>
