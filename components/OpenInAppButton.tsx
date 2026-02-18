@@ -1,20 +1,17 @@
 "use client";
 
-// TODO: Replace APP_STORE_URL with the real App Store link once the app is live.
-const APP_STORE_URL = "https://apps.apple.com/gb/developer/scene/id";
-
 interface OpenInAppButtonProps {
   username: string;
   className?: string;
 }
 
 /**
- * Attempts to open the Scene app via its custom URL scheme (scene://user/{username}).
- * If the app is not installed, the scheme call silently fails and after a short
- * delay we fall back to the App Store so the user can download it.
+ * Opens the Scene app via its custom URL scheme (scene://user/{username}).
+ * If the app is not installed, Safari shows a brief "cannot open" notice and
+ * the user can use the Download button below as fallback.
  *
- * Universal Links (https://ourscene.uk/{username}) handle the open-from-outside-Safari
- * case (Messages, Notes, etc.) — this button handles the in-browser case.
+ * Universal Links (https://ourscene.uk/{username}) handle the open-from-outside-
+ * Safari case (Messages, Notes, etc.) — this button handles the in-browser case.
  */
 export default function OpenInAppButton({
   username,
@@ -24,22 +21,11 @@ export default function OpenInAppButton({
 
   function handleClick(e: React.MouseEvent<HTMLAnchorElement>) {
     e.preventDefault();
-
-    // Try to open the app via the custom URL scheme.
+    // Navigate to the custom URL scheme. If the app is installed iOS opens it
+    // directly. If not, Safari shows a brief "cannot open" notice and the user
+    // can use the "Download Scene" button below. No timeout fallback — it
+    // caused the App Store to open even when the app launched successfully.
     window.location.href = deepLink;
-
-    // If the app is not installed the scheme will fail silently and the page
-    // will remain visible. After 1.5 s we redirect to the App Store as fallback.
-    // The timeout is cleared if the page hides (user switched to the app).
-    const timeout = setTimeout(() => {
-      window.location.href = APP_STORE_URL;
-    }, 1500);
-
-    const clearOnHide = () => {
-      clearTimeout(timeout);
-      document.removeEventListener("visibilitychange", clearOnHide);
-    };
-    document.addEventListener("visibilitychange", clearOnHide);
   }
 
   return (
