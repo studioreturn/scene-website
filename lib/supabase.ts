@@ -3,17 +3,17 @@ import type { PublicProfileResponse } from "./types";
 const SUPABASE_FUNCTION_URL =
   "https://pppynzuccijjqydhtjgu.supabase.co/functions/v1/public-profile";
 
-// TODO: Move this to an environment variable (SUPABASE_ANON_KEY) in production.
-// Add SUPABASE_ANON_KEY=<value> to your .env.local and Vercel environment variables.
-const SUPABASE_ANON_KEY =
-  "sb_publishable_JgxFfMF17caRez2K6C_KBQ_H8BqWVS-";
+// Read the anon key from the environment. Set SUPABASE_ANON_KEY in:
+//   - .env.local for local development
+//   - Vercel → Project → Settings → Environment Variables for production
+const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY ?? "";
 
 // ---------------------------------------------------------------------------
 // MOCK DATA
-// Used while the real Supabase Edge Function is not yet deployed.
-// TODO: Remove MOCK_MODE and mock data once the Edge Function is live.
+// Set MOCK_MODE = true to use local mock data instead of the Edge Function.
+// Useful during local development before the Edge Function is deployed.
 // ---------------------------------------------------------------------------
-const MOCK_MODE = true;
+const MOCK_MODE = false;
 
 const MOCK_PROFILES: Record<string, PublicProfileResponse> = {
   willgreen: {

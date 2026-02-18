@@ -36,11 +36,11 @@ export const metadata: Metadata = {
       "Track every gig, discover what's on, and share your gig passport.",
     images: ["/og-default.png"],
   },
-  other: {
-    // TODO: Replace REPLACE_WITH_APP_STORE_ID with the real App Store app ID
-    // from App Store Connect → App Information.
-    "apple-itunes-app": "app-id=REPLACE_WITH_APP_STORE_ID",
-  },
+  // TODO: Add the Smart App Banner once the app is live on the App Store.
+  // Uncomment and fill in the App Store ID from App Store Connect → App Information:
+  // other: {
+  //   "apple-itunes-app": "app-id=<APP_STORE_ID>",
+  // },
 };
 
 export default function RootLayout({

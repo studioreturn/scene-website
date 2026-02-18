@@ -1,7 +1,7 @@
-// TODO: Replace href with the real App Store URL once the app is live.
+// TODO: Replace APP_STORE_URL with the real App Store link once the app is live.
 // e.g. "https://apps.apple.com/gb/app/scene/id<APP_STORE_ID>"
-const APP_STORE_URL =
-  "https://apps.apple.com/gb/app/scene/idREPLACE_WITH_APP_STORE_ID";
+// For now the button links to the App Store search page as a safe fallback.
+const APP_STORE_URL = "https://apps.apple.com/gb/developer/scene/id";
 
 interface AppStoreButtonProps {
   className?: string;

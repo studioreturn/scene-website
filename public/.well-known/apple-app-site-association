@@ -2,7 +2,7 @@
   "applinks": {
     "details": [
       {
-        "appIDs": ["REPLACE_WITH_TEAM_ID.com.studioreturn.scene"],
+        "appIDs": ["ZRB27TK2FK.com.studioreturn.scene"],
         "components": [
           { "/": "/*", "exclude": true },
           { "/": "/*/", "comment": "Match all username routes" }
