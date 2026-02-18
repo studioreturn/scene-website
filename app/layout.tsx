@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: "Scene — Your live music life",
   description:
     "Track every gig, discover what's on, and share your gig passport.",
-  metadataBase: new URL("https://ourscene.uk"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://ourscene.uk"),
   openGraph: {
     title: "Scene — Your live music life",
     description:
