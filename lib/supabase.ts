@@ -6,16 +6,31 @@ const SUPABASE_FUNCTION_URL =
 // Read the anon key from the environment. Set SUPABASE_ANON_KEY in:
 //   - .env.local for local development
 //   - Vercel → Project → Settings → Environment Variables for production
-const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY ?? "";
+const SUPABASE_ANON_KEY =
+  process.env.SUPABASE_ANON_KEY ??
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBwcHluenVjY2lqanF5ZGh0amd1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNjc5ODgsImV4cCI6MjA4Njk0Mzk4OH0.jDTOrJTlLUsREPZy3-BQHW_P0LwFOEtws5fCZqwZaHA";
 
 // ---------------------------------------------------------------------------
 // MOCK DATA
 // Set MOCK_MODE = true to use local mock data instead of the Edge Function.
 // Useful during local development before the Edge Function is deployed.
 // ---------------------------------------------------------------------------
-const MOCK_MODE = true;
+const MOCK_MODE = false;
 
 const MOCK_PROFILES: Record<string, PublicProfileResponse> = {
+  will: {
+    profile: {
+      displayName: "Will",
+      username: "will",
+      bio: undefined,
+      avatarURL: undefined,
+    },
+    gigs: [],
+    stats: {
+      gigCountThisYear: 0,
+      mostVisitedVenue: undefined,
+    },
+  },
   willgreen: {
     profile: {
       displayName: "Will Green",
