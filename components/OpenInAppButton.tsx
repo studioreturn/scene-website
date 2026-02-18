@@ -1,25 +1,51 @@
 "use client";
 
+// TODO: Replace APP_STORE_URL with the real App Store link once the app is live.
+const APP_STORE_URL = "https://apps.apple.com/gb/developer/scene/id";
+
 interface OpenInAppButtonProps {
   username: string;
   className?: string;
 }
 
 /**
- * Universal Link button — on iOS, the system intercepts the tap and opens the
- * Scene app directly (if installed). On other platforms it falls through to the
- * web profile page, which is fine.
+ * Attempts to open the Scene app via its custom URL scheme (scene://user/{username}).
+ * If the app is not installed, the scheme call silently fails and after a short
+ * delay we fall back to the App Store so the user can download it.
+ *
+ * Universal Links (https://ourscene.uk/{username}) handle the open-from-outside-Safari
+ * case (Messages, Notes, etc.) — this button handles the in-browser case.
  */
 export default function OpenInAppButton({
   username,
   className = "",
 }: OpenInAppButtonProps) {
-  // The URL is the same as the current page — iOS Universal Links intercept it.
-  const url = `https://ourscene.uk/${username}`;
+  const deepLink = `scene://user/${username}`;
+
+  function handleClick(e: React.MouseEvent<HTMLAnchorElement>) {
+    e.preventDefault();
+
+    // Try to open the app via the custom URL scheme.
+    window.location.href = deepLink;
+
+    // If the app is not installed the scheme will fail silently and the page
+    // will remain visible. After 1.5 s we redirect to the App Store as fallback.
+    // The timeout is cleared if the page hides (user switched to the app).
+    const timeout = setTimeout(() => {
+      window.location.href = APP_STORE_URL;
+    }, 1500);
+
+    const clearOnHide = () => {
+      clearTimeout(timeout);
+      document.removeEventListener("visibilitychange", clearOnHide);
+    };
+    document.addEventListener("visibilitychange", clearOnHide);
+  }
 
   return (
     <a
-      href={url}
+      href={deepLink}
+      onClick={handleClick}
       className={`inline-flex items-center justify-center gap-2 bg-scene-accent text-black font-semibold text-sm px-6 py-3.5 rounded-full hover:opacity-90 active:scale-95 transition-all duration-150 ${className}`}
     >
       <svg
