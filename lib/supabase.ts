@@ -13,7 +13,7 @@ const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY ?? "";
 // Set MOCK_MODE = true to use local mock data instead of the Edge Function.
 // Useful during local development before the Edge Function is deployed.
 // ---------------------------------------------------------------------------
-const MOCK_MODE = false;
+const MOCK_MODE = true;
 
 const MOCK_PROFILES: Record<string, PublicProfileResponse> = {
   willgreen: {
@@ -66,8 +66,9 @@ async function fetchFromEdgeFunction(
   // POST https://pppynzuccijjqydhtjgu.supabase.co/functions/v1/public-profile
   // Body: { "username": "<username>" }
   // Returns: { profile: {...}, gigs: [...], stats: {...} }
+  let res: Response;
   try {
-    const res = await fetch(SUPABASE_FUNCTION_URL, {
+    res = await fetch(SUPABASE_FUNCTION_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -78,15 +79,26 @@ async function fetchFromEdgeFunction(
       // Revalidate at most every 60 seconds (ISR-friendly)
       next: { revalidate: 60 },
     });
-
-    if (res.status === 404) return null;
-    if (!res.ok) throw new Error(`Edge Function error: ${res.status}`);
-
-    return (await res.json()) as PublicProfileResponse;
   } catch (err) {
-    console.error("[supabase] fetchPublicProfile error:", err);
-    return null;
+    // Network-level failure (DNS, timeout, etc.) — surface clearly in logs,
+    // throw so the page renders a 500 rather than a silent "not found".
+    console.error("[supabase] Network error reaching Edge Function:", err);
+    throw new Error("Could not reach the Scene API. Please try again later.");
   }
+
+  // A 404 from the Edge Function means the *profile* wasn't found.
+  // Any other non-OK status is an unexpected server error.
+  if (res.status === 404) return null;
+
+  if (!res.ok) {
+    const body = await res.text().catch(() => "(no body)");
+    console.error(
+      `[supabase] Edge Function error ${res.status}: ${body}`
+    );
+    throw new Error(`Scene API returned ${res.status}. Please try again later.`);
+  }
+
+  return (await res.json()) as PublicProfileResponse;
 }
 
 // ---------------------------------------------------------------------------
