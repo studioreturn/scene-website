@@ -4,8 +4,8 @@
       {
         "appIDs": ["ZRB27TK2FK.com.studioreturn.scene"],
         "components": [
-          { "/": "/*", "exclude": true },
-          { "/": "/*/", "comment": "Match all username routes" }
+          { "/": "/*/", "comment": "Match all username routes" },
+          { "/": "/*", "exclude": true }
         ]
       }
     ]
