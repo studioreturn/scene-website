@@ -14,7 +14,7 @@ export default function AppStoreButton({ className = "" }: AppStoreButtonProps) 
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Download on the App Store"
-      className={`inline-flex items-center justify-center bg-scene-surface border border-scene-border text-white font-semibold text-sm px-6 py-3.5 rounded-full hover:bg-white/5 active:scale-95 transition-all duration-150 ${className}`}
+      className={`inline-flex items-center justify-center bg-scene-surface border border-scene-border text-white font-semibold text-sm px-5 py-2.5 rounded-full hover:bg-white/5 active:scale-95 transition-all duration-150 ${className}`}
     >
       Download on the App Store
     </a>

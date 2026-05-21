@@ -32,48 +32,48 @@ export default function ProfileCard({ data }: ProfileCardProps) {
   ];
 
   return (
-    <div className="min-h-screen bg-scene-bg px-4 pt-12 pb-24">
+    <div className="min-h-screen bg-scene-bg px-4 pt-8 pb-16">
       <div className="max-w-sm mx-auto">
 
         {/* ── Avatar + name + URL pill ── */}
-        <div className="flex flex-col items-center text-center gap-3 mb-6">
+        <div className="flex flex-col items-center text-center gap-2 mb-4">
           {/* Avatar with optional tier pip badge */}
-          <div className="relative w-24 h-24">
-            <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-white/20 bg-scene-surface flex items-center justify-center">
+          <div className="relative w-20 h-20">
+            <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-white/20 bg-scene-surface flex items-center justify-center">
               {profile.avatarURL ? (
                 <Image
                   src={profile.avatarURL}
                   alt={`${profile.displayName}'s avatar`}
-                  width={96}
-                  height={96}
+                  width={80}
+                  height={80}
                   className="object-cover w-full h-full"
                 />
               ) : (
-                <span className="text-white text-4xl font-bold select-none">
+                <span className="text-white text-3xl font-bold select-none">
                   {profile.displayName.charAt(0).toUpperCase()}
                 </span>
               )}
             </div>
-            {/* Pip badge — only shown when user has a tier */}
+            {/* Pip badge */}
             {profile.tier && (
-              <div className="absolute top-0.5 right-0.5 w-6 h-6 rounded-full bg-[#C8F53A] flex items-center justify-center ring-2 ring-scene-bg">
-                <svg viewBox="0 0 24 24" className="w-3 h-3 fill-black" aria-hidden="true">
+              <div className="absolute top-0.5 right-0.5 w-5 h-5 rounded-full bg-white flex items-center justify-center ring-2 ring-scene-bg">
+                <svg viewBox="0 0 24 24" className="w-2.5 h-2.5 fill-black" aria-hidden="true">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                 </svg>
               </div>
             )}
           </div>
 
-          <h1 className="text-white font-bold text-2xl leading-tight">
+          <h1 className="text-white font-bold text-xl leading-tight">
             {profile.displayName}
           </h1>
 
           {/* Tier badge */}
           {profile.tier && (
-            <div className="inline-flex items-center gap-1.5 bg-[#C8F53A] text-black text-[11px] font-bold uppercase tracking-wide rounded-full px-3 py-1">
+            <div className="inline-flex items-center gap-1 bg-white text-black text-[10px] font-medium tracking-wide rounded-full px-2.5 py-0.5">
               <svg
                 viewBox="0 0 24 24"
-                className="w-3 h-3 fill-black flex-shrink-0"
+                className="w-2.5 h-2.5 fill-black flex-shrink-0"
                 aria-hidden="true"
               >
                 <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
@@ -104,7 +104,7 @@ export default function ProfileCard({ data }: ProfileCardProps) {
           )}
 
           {/* URL pill */}
-          <div className="inline-flex items-center gap-1.5 bg-scene-surface border border-scene-border rounded-full px-3 py-1.5">
+          <div className="inline-flex items-center gap-1 bg-scene-surface border border-scene-border rounded-full px-3 py-1">
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -112,19 +112,19 @@ export default function ProfileCard({ data }: ProfileCardProps) {
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="w-3.5 h-3.5 text-scene-muted flex-shrink-0"
+              className="w-3 h-3 text-scene-muted flex-shrink-0"
               aria-hidden="true"
             >
               <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
               <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
             </svg>
-            <span className="text-scene-muted text-sm">
+            <span className="text-scene-muted text-xs">
               ourscene.uk/{profile.username}
             </span>
           </div>
 
           {profile.bio && (
-            <p className="text-scene-muted text-sm max-w-xs leading-relaxed">
+            <p className="text-scene-muted text-xs max-w-xs leading-relaxed">
               {profile.bio}
             </p>
           )}
@@ -132,21 +132,21 @@ export default function ProfileCard({ data }: ProfileCardProps) {
 
         {/* ── Stats card ── */}
         {statColumns.length > 0 && (
-          <div className="bg-scene-surface border border-scene-border rounded-2xl p-4 mb-4">
+          <div className="bg-scene-surface border border-scene-border rounded-2xl p-3 mb-3">
             <div className="flex divide-x divide-scene-border items-center">
               {statColumns.map((col, i) => (
                 <div
                   key={i}
-                  className={`flex-1 text-center ${i === 0 ? "pr-4" : i === statColumns.length - 1 ? "pl-4" : "px-4"}`}
+                  className={`flex-1 text-center ${i === 0 ? "pr-3" : i === statColumns.length - 1 ? "pl-3" : "px-3"}`}
                 >
                   <p
                     className={`text-white font-bold leading-tight truncate ${
-                      col.large ? "text-3xl" : "text-base"
+                      col.large ? "text-2xl" : "text-sm"
                     }`}
                   >
                     {col.value}
                   </p>
-                  <p className="text-scene-muted text-xs mt-1">{col.label}</p>
+                  <p className="text-scene-muted text-[10px] mt-0.5">{col.label}</p>
                 </div>
               ))}
             </div>
@@ -191,7 +191,7 @@ export default function ProfileCard({ data }: ProfileCardProps) {
         )}
 
         {/* ── Footer ── */}
-        <p className="mt-8 text-scene-muted text-xs text-center">
+        <p className="mt-6 text-scene-muted text-xs text-center">
           <a href="/" className="hover:text-white transition-colors">
             What is Scene?
           </a>

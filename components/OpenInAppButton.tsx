@@ -28,7 +28,7 @@ export default function OpenInAppButton({
     <a
       href={deepLink}
       onClick={handleClick}
-      className={`inline-flex items-center justify-center gap-2 bg-white text-black font-semibold text-sm px-6 py-3.5 rounded-full hover:bg-white/90 active:scale-95 transition-all duration-150 ${className}`}
+      className={`inline-flex items-center justify-center gap-2 bg-white text-black font-semibold text-sm px-5 py-2.5 rounded-full hover:bg-white/90 active:scale-95 transition-all duration-150 ${className}`}
     >
       Open in Scene
     </a>

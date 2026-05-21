@@ -20,7 +20,7 @@ function StarRating({ rating }: { rating: number }) {
         <svg
           key={i}
           viewBox="0 0 24 24"
-          className={`w-3 h-3 flex-shrink-0 ${
+          className={`w-2.5 h-2.5 flex-shrink-0 ${
             i <= rating ? "fill-amber-400" : "fill-[#2C2C2E]"
           }`}
           aria-hidden="true"
@@ -88,36 +88,36 @@ export default function GigStub({ gig }: GigStubProps) {
         style={{ backgroundColor: "#1C1C1E" }}
       >
         {/* Main ticket body */}
-        <div className="flex-1 px-4 py-4 min-w-0">
-          <div className="flex items-start justify-between gap-3 mb-2">
+        <div className="flex-1 px-3 py-3 min-w-0">
+          <div className="flex items-start justify-between gap-2 mb-1.5">
             <div className="min-w-0 flex-1">
-              <p className="text-white font-bold text-base leading-snug truncate">
+              <p className="text-white font-bold text-[14px] leading-snug truncate">
                 {gig.artist}
               </p>
-              <p className="text-[#8E8E93] text-[13px] mt-0.5 truncate">
+              <p className="text-[#8E8E93] text-xs mt-0.5 truncate">
                 {gig.venue}
               </p>
             </div>
             <svg
               viewBox="0 0 24 24"
               fill="currentColor"
-              className="w-[18px] h-[18px] text-[#636366] flex-shrink-0 mt-0.5"
+              className="w-4 h-4 text-[#636366] flex-shrink-0 mt-0.5"
               aria-hidden="true"
             >
               <path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z" />
             </svg>
           </div>
 
-          <div className="flex items-center gap-1.5 mt-3">
+          <div className="flex items-center gap-1.5 mt-2">
             <svg
               viewBox="0 0 24 24"
               fill="currentColor"
-              className="w-[14px] h-[14px] text-[#636366] flex-shrink-0"
+              className="w-3 h-3 text-[#636366] flex-shrink-0"
               aria-hidden="true"
             >
               <path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z" />
             </svg>
-            <span className="text-[#8E8E93] text-[13px]">{formatDate(gig.date)}</span>
+            <span className="text-[#8E8E93] text-xs">{formatDate(gig.date)}</span>
             {gig.rating !== undefined && (
               <div className="ml-1">
                 <StarRating rating={gig.rating} />

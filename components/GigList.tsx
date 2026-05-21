@@ -32,10 +32,10 @@ export default function GigList({ gigs, maxGigs = 3 }: GigListProps) {
   return (
     <div>
       {/* Tab toggle */}
-      <div className="flex gap-2 mb-4">
+      <div className="flex gap-2 mb-3">
         <button
           onClick={() => setTab("top")}
-          className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-colors ${
+          className={`px-3 py-1 rounded-full text-xs font-semibold transition-colors ${
             tab === "top"
               ? "bg-white text-black"
               : "bg-transparent text-scene-muted border border-scene-border"
@@ -45,7 +45,7 @@ export default function GigList({ gigs, maxGigs = 3 }: GigListProps) {
         </button>
         <button
           onClick={() => setTab("recent")}
-          className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-colors ${
+          className={`px-3 py-1 rounded-full text-xs font-semibold transition-colors ${
             tab === "recent"
               ? "bg-white text-black"
               : "bg-transparent text-scene-muted border border-scene-border"
@@ -55,7 +55,7 @@ export default function GigList({ gigs, maxGigs = 3 }: GigListProps) {
         </button>
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-2">
         {displayed.map((gig) => (
           <GigStub key={gig.id} gig={gig} />
         ))}
