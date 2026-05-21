@@ -32,83 +32,81 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
-// Stub width in px — must match the w-11 (44px) inner stub div
+// ── Decorative barcode ────────────────────────────────────────────────────────
+const BAR_H = [3, 1, 2, 1, 3, 1, 1, 2, 1, 3, 2, 1, 1, 2, 3, 1, 2, 1, 1, 3, 1, 2, 1, 2, 1, 1, 3, 2];
+const GAP_H = [1, 1, 1, 2, 1, 1, 2, 1, 1, 2, 1, 2, 1, 1, 2, 1, 1, 2, 1, 1, 2, 1, 2, 1, 2, 1, 1, 2];
+
+const BARCODE_BARS: { y: number; h: number }[] = [];
+let _y = 0;
+for (let i = 0; i < BAR_H.length; i++) {
+  BARCODE_BARS.push({ y: _y, h: BAR_H[i] });
+  _y += BAR_H[i] + GAP_H[i];
+}
+const BARCODE_TOTAL_H = _y;
+// ─────────────────────────────────────────────────────────────────────────────
+
 const STUB_W = 44;
-const NOTCH_D = 18; // notch circle diameter
+const NOTCH_D = 18;
 
 export default function GigStub({ gig }: GigStubProps) {
   return (
-    /*
-     * Two-div approach so the border follows the notch cutouts:
-     *
-     *  ┌─ outer wrapper ──────────────────────────────────────────┐
-     *  │  border: 1px solid — NO overflow:hidden                  │
-     *  │  Notch circles live here (z-index above border),         │
-     *  │  coloured page-bg so they visually erase the border      │
-     *  │  at the punch-hole positions.                            │
-     *  │                                                          │
-     *  │  ┌─ inner card ─────────────────────────────────────┐   │
-     *  │  │  overflow:hidden — clips content to rounded rect  │   │
-     *  │  │  bg: #1C1C1E                                      │   │
-     *  │  └──────────────────────────────────────────────────┘   │
-     *  └──────────────────────────────────────────────────────────┘
-     */
     <div
       className="relative rounded-2xl"
       style={{ border: "1px solid #2C2C2E" }}
     >
-      {/* ── Notch circles on the outer wrapper ── */}
-      {/* Centre sits on wrapper's top edge at the divider x-position */}
+      {/* Notch circles */}
       <div
         className="absolute rounded-full z-10 pointer-events-none"
         style={{
-          width: NOTCH_D,
-          height: NOTCH_D,
-          backgroundColor: "#0A0A0A",
-          top: 0,
-          right: STUB_W,
+          width: NOTCH_D, height: NOTCH_D, backgroundColor: "#0A0A0A",
+          top: 0, right: STUB_W,
           transform: "translateX(50%) translateY(-50%)",
         }}
       />
       <div
         className="absolute rounded-full z-10 pointer-events-none"
         style={{
-          width: NOTCH_D,
-          height: NOTCH_D,
-          backgroundColor: "#0A0A0A",
-          bottom: 0,
-          right: STUB_W,
+          width: NOTCH_D, height: NOTCH_D, backgroundColor: "#0A0A0A",
+          bottom: 0, right: STUB_W,
           transform: "translateX(50%) translateY(50%)",
         }}
       />
 
-      {/* ── Inner card — overflow:hidden clips content only ── */}
+      {/* Inner card */}
       <div
         className="rounded-2xl overflow-hidden flex"
         style={{ backgroundColor: "#1C1C1E" }}
       >
-        {/* Main ticket body */}
-        <div className="flex-1 px-3 py-3 min-w-0">
-          <div className="flex items-start justify-between gap-2 mb-1.5">
-            <div className="min-w-0 flex-1">
-              <p className="text-white font-bold text-[14px] leading-snug truncate">
-                {gig.artist}
-              </p>
-              <p className="text-[#8E8E93] text-xs mt-0.5 truncate">
-                {gig.venue}
-              </p>
-            </div>
+        {/* Main ticket body — relative so barcode can be absolutely positioned */}
+        <div className="relative flex-1 px-3 py-3 min-w-0">
+          {/* Full-height decorative barcode pinned to the right edge */}
+          <div
+            className="absolute pointer-events-none"
+            style={{ top: 12, bottom: 12, right: 12, width: 11, opacity: 0.22 }}
+            aria-hidden="true"
+          >
             <svg
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-4 h-4 text-[#636366] flex-shrink-0 mt-0.5"
-              aria-hidden="true"
+              viewBox={`0 0 1 ${BARCODE_TOTAL_H}`}
+              preserveAspectRatio="none"
+              style={{ width: "100%", height: "100%" }}
             >
-              <path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z" />
+              {BARCODE_BARS.map(({ y, h }, i) => (
+                <rect key={i} x="0" y={y} width="1" height={h} fill="white" />
+              ))}
             </svg>
           </div>
 
-          <div className="flex items-center gap-1.5 mt-2">
+          {/* Text content — right padding avoids overlapping the barcode */}
+          <div className="pr-4">
+            <p className="text-white font-bold text-[14px] leading-snug truncate">
+              {gig.artist}
+            </p>
+            <p className="text-[#8E8E93] text-xs mt-0.5 truncate">
+              {gig.venue}
+            </p>
+          </div>
+
+          <div className="flex items-center gap-1.5 mt-2 pr-4">
             <svg
               viewBox="0 0 24 24"
               fill="currentColor"
@@ -131,7 +129,7 @@ export default function GigStub({ gig }: GigStubProps) {
           className="relative flex-shrink-0 flex items-center justify-center"
           style={{ width: STUB_W }}
         >
-          {/* Dark perforation dashes — page-bg colour = holes in the card */}
+          {/* Perforation dashes */}
           <div
             className="absolute inset-y-0"
             style={{
