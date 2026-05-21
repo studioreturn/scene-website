@@ -20,15 +20,27 @@ const MOCK_MODE = false;
 const MOCK_PROFILES: Record<string, PublicProfileResponse> = {
   will: {
     profile: {
-      displayName: "Will",
+      displayName: "Will Green",
       username: "will",
       bio: undefined,
       avatarURL: undefined,
+      userNumber: 1,
+      tier: "alpha",
+      country: "GB",
+      joinedAt: "2024-09-01T00:00:00.000Z",
     },
-    gigs: [],
+    gigs: [
+      { id: "1", artist: "Bodysnatcher & Ingested", venue: "The Fleece", date: "2026-03-05", rating: 5 },
+      { id: "2", artist: "Hot Mulligan", venue: "The Prospect Building", date: "2026-03-10", rating: 5 },
+      { id: "3", artist: "Dry Cleaning", venue: "SWX, Bristol", date: "2025-09-20", rating: 4 },
+      { id: "4", artist: "Squid", venue: "Motion, Bristol", date: "2025-08-15", rating: 3 },
+      { id: "5", artist: "Shame", venue: "Exchange", date: "2025-07-01", rating: 5 },
+    ],
     stats: {
-      gigCountThisYear: 0,
-      mostVisitedVenue: undefined,
+      gigCountThisYear: 10,
+      mostVisitedVenue: "Exchange",
+      topGenre: "Hardcore Punk",
+      ratingDistribution: { 1: 0, 2: 0, 3: 1, 4: 0, 5: 5 },
     },
   },
   willgreen: {
@@ -39,34 +51,17 @@ const MOCK_PROFILES: Record<string, PublicProfileResponse> = {
       avatarURL: undefined,
     },
     gigs: [
-      {
-        id: "1",
-        artist: "Fontaines D.C.",
-        venue: "O2 Academy Bristol",
-        date: "2025-11-14",
-      },
-      {
-        id: "2",
-        artist: "Black Midi",
-        venue: "Thekla, Bristol",
-        date: "2025-10-03",
-      },
-      {
-        id: "3",
-        artist: "Dry Cleaning",
-        venue: "SWX, Bristol",
-        date: "2025-09-20",
-      },
-      {
-        id: "4",
-        artist: "Squid",
-        venue: "Motion, Bristol",
-        date: "2025-08-15",
-      },
+      { id: "1", artist: "Fontaines D.C.", venue: "O2 Academy Bristol", date: "2026-03-05", rating: 5 },
+      { id: "2", artist: "Black Midi", venue: "Thekla, Bristol", date: "2026-03-10", rating: 5 },
+      { id: "3", artist: "Dry Cleaning", venue: "SWX, Bristol", date: "2025-09-20", rating: 4 },
+      { id: "4", artist: "Squid", venue: "Motion, Bristol", date: "2025-08-15", rating: 3 },
+      { id: "5", artist: "Shame", venue: "The Fleece, Bristol", date: "2025-07-01", rating: 5 },
     ],
     stats: {
-      gigCountThisYear: 23,
-      mostVisitedVenue: "O2 Academy Bristol",
+      gigCountThisYear: 10,
+      mostVisitedVenue: "Exchange",
+      topGenre: "Hardcore Punk",
+      ratingDistribution: { 1: 0, 2: 0, 3: 1, 4: 0, 5: 5 },
     },
   },
 };

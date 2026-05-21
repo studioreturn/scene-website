@@ -21,10 +21,6 @@ export default function OpenInAppButton({
 
   function handleClick(e: React.MouseEvent<HTMLAnchorElement>) {
     e.preventDefault();
-    // Navigate to the custom URL scheme. If the app is installed iOS opens it
-    // directly. If not, Safari shows a brief "cannot open" notice and the user
-    // can use the "Download Scene" button below. No timeout fallback — it
-    // caused the App Store to open even when the app launched successfully.
     window.location.href = deepLink;
   }
 
@@ -32,15 +28,17 @@ export default function OpenInAppButton({
     <a
       href={deepLink}
       onClick={handleClick}
-      className={`inline-flex items-center justify-center gap-2 bg-scene-accent text-black font-semibold text-sm px-6 py-3.5 rounded-full hover:opacity-90 active:scale-95 transition-all duration-150 ${className}`}
+      className={`inline-flex items-center justify-center gap-2 bg-white text-black font-semibold text-sm px-6 py-3.5 rounded-full hover:bg-white/90 active:scale-95 transition-all duration-150 ${className}`}
     >
+      {/* Scene app icon — inverted (black on white button) */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 814 1000"
-        className="w-4 h-4 fill-current flex-shrink-0"
+        viewBox="0 0 685 767"
+        className="w-4 h-4 flex-shrink-0"
         aria-hidden="true"
+        fill="black"
       >
-        <path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-37.5-172.5-137.8C46.4 724.1 1 577 1 430.1c0-226.6 148.3-346.7 294.3-346.7 74.2 0 136.1 49.3 183.5 49.3 45.3 0 116.3-52.5 201.8-52.5 32.5 0 118.3 2.9 184 76.3zm-224.8-98.1c33.5-39.5 57.2-94.3 57.2-149.1 0-7.6-.6-15.2-1.9-21.5-54.4 1.9-118.3 36.2-157.6 80.8-30.8 35.5-59.5 90.3-59.5 146.5 0 8.3 1.3 16.5 1.9 19.1 3.2.6 8.3 1.3 13.5 1.3 48.7 0 109.5-32.8 146.4-76.1z" />
+        <path d="M684.847 271.376V80.3079L520.752 0L164.217 173.765V334.565L0 414.727V605.642L328.611 766.296L685 592.232V400.896L552.155 335.91L684.847 271.376ZM356.236 271.376L657.337 124.431V253.951L356.236 400.896V271.376ZM328.607 575.228L191.869 641.86V511.497L328.607 444.716L493.123 364.523V494.196L328.607 574.389V575.228ZM657.364 575.228L356.232 722.05V592.232L520.748 511.503L657.333 444.871L657.364 575.228Z" />
       </svg>
       Open in Scene
     </a>

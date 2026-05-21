@@ -29,7 +29,7 @@ Deno.serve(async (req: Request) => {
     // ── 1. Profile ──────────────────────────────────────────────────────────
     const { data: profile, error: profileError } = await supabase
       .from("profiles")
-      .select("id, username, display_name, bio, avatar_url")
+      .select("id, username, display_name, bio, avatar_url, user_number, tier, country, created_at")
       .eq("username", username)
       .single();
 
@@ -37,39 +37,67 @@ Deno.serve(async (req: Request) => {
       return json({ error: "Profile not found" }, 404);
     }
 
-    // ── 2. Attended gigs ────────────────────────────────────────────────────
-    // Join attendances → gigs, ordered by gig date descending.
+    // ── 2. Attended gigs (with per-attendance rating) ────────────────────────
     const { data: attendances } = await supabase
       .from("attendances")
-      .select("gigs(id, artist_name, venue_name, date)")
+      .select("rating, gigs(id, artist_name, venue_name, date, genre)")
       .eq("user_id", profile.id);
 
-    type GigRow = { id: string; artist_name: string; venue_name: string; date: string };
+    type GigRow = {
+      id: string;
+      artist_name: string;
+      venue_name: string;
+      date: string;
+      genre: string | null;
+    };
 
-    const allGigs: GigRow[] = (attendances ?? [])
-      .map((a: { gigs: GigRow | null }) => a.gigs)
-      .filter((g): g is GigRow => g !== null)
-      // Sort by date descending
-      .sort(
-        (a: GigRow, b: GigRow) =>
-          new Date(b.date).getTime() - new Date(a.date).getTime()
-      );
+    type AttendanceRow = {
+      rating: number | null;
+      gigs: GigRow | null;
+    };
+
+    const allGigsWithRating = (attendances as AttendanceRow[] ?? [])
+      .filter((a): a is AttendanceRow & { gigs: GigRow } => a.gigs !== null)
+      .map((a) => ({ ...a.gigs, rating: a.rating }))
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
     // ── 3. Stats ────────────────────────────────────────────────────────────
     const currentYear = new Date().getFullYear();
 
-    const gigCountThisYear = allGigs.filter(
+    const gigCountThisYear = allGigsWithRating.filter(
       (g) => new Date(g.date).getFullYear() === currentYear
     ).length;
 
-    // Most visited venue across all time
+    // Most visited venue (all time)
     const venueCounts: Record<string, number> = {};
-    for (const gig of allGigs) {
+    for (const gig of allGigsWithRating) {
       venueCounts[gig.venue_name] = (venueCounts[gig.venue_name] ?? 0) + 1;
     }
     const mostVisitedVenue =
       Object.entries(venueCounts).sort((a, b) => b[1] - a[1])[0]?.[0] ??
       undefined;
+
+    // Top genre (most common genre across attended gigs)
+    const genreCounts: Record<string, number> = {};
+    for (const gig of allGigsWithRating) {
+      if (gig.genre) {
+        genreCounts[gig.genre] = (genreCounts[gig.genre] ?? 0) + 1;
+      }
+    }
+    const topGenre =
+      Object.entries(genreCounts).sort((a, b) => b[1] - a[1])[0]?.[0] ??
+      undefined;
+
+    // Rating distribution (only rated gigs)
+    const dist = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+    let hasAnyRating = false;
+    for (const gig of allGigsWithRating) {
+      if (gig.rating !== null && gig.rating >= 1 && gig.rating <= 5) {
+        dist[gig.rating as 1 | 2 | 3 | 4 | 5]++;
+        hasAnyRating = true;
+      }
+    }
+    const ratingDistribution = hasAnyRating ? dist : undefined;
 
     // ── 4. Response ─────────────────────────────────────────────────────────
     return json({
@@ -78,18 +106,24 @@ Deno.serve(async (req: Request) => {
         username: profile.username,
         bio: profile.bio ?? undefined,
         avatarURL: profile.avatar_url ?? undefined,
+        userNumber: profile.user_number ?? undefined,
+        tier: profile.tier ?? undefined,
+        country: profile.country ?? undefined,
+        joinedAt: profile.created_at ?? undefined,
       },
       // Most recent 5 gigs for the profile card
-      gigs: allGigs.slice(0, 5).map((g) => ({
+      gigs: allGigsWithRating.slice(0, 5).map((g) => ({
         id: g.id,
         artist: g.artist_name,
         venue: g.venue_name,
-        // Trim to YYYY-MM-DD — the site expects a plain date string
         date: g.date.slice(0, 10),
+        rating: g.rating ?? undefined,
       })),
       stats: {
         gigCountThisYear,
         mostVisitedVenue,
+        topGenre,
+        ratingDistribution,
       },
     });
   } catch (err) {
