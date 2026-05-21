@@ -13,13 +13,20 @@ export default function GigList({ gigs, maxGigs = 3 }: GigListProps) {
   const [tab, setTab] = useState<"top" | "recent">("top");
 
   const displayed = useMemo(() => {
-    const sorted = [...gigs];
     if (tab === "top") {
-      sorted.sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0));
-    } else {
-      sorted.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+      const rated = gigs.filter((g) => g.rating !== undefined);
+      // If no rated gigs yet, fall back to date order so the list isn't empty
+      const source = rated.length > 0 ? rated : gigs;
+      return [...source]
+        .sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0))
+        .slice(0, maxGigs);
     }
-    return sorted.slice(0, maxGigs);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return [...gigs]
+      .filter((g) => new Date(g.date) <= today)
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, maxGigs);
   }, [gigs, tab, maxGigs]);
 
   return (

@@ -111,8 +111,9 @@ Deno.serve(async (req: Request) => {
         country: profile.country ?? undefined,
         joinedAt: profile.created_at ?? undefined,
       },
-      // Most recent 5 gigs for the profile card
-      gigs: allGigsWithRating.slice(0, 5).map((g) => ({
+      // Return enough gigs for both Top Rated and Recent tabs to have good candidates.
+      // Frontend slices to 3 per tab after sorting.
+      gigs: allGigsWithRating.slice(0, 20).map((g) => ({
         id: g.id,
         artist: g.artist_name,
         venue: g.venue_name,
