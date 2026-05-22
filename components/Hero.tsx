@@ -1,4 +1,5 @@
 import Image from "next/image";
+import JoinBetaButton from "./JoinBetaButton";
 
 function PhoneShot({
   src,
@@ -60,14 +61,7 @@ The home of
           </p>
 
           <div className="mt-10 flex justify-center lg:justify-start">
-            <a
-              href="https://testflight.apple.com/join/jKXRVhSz"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center bg-white text-black font-semibold text-sm px-6 py-2.5 rounded-full hover:bg-white/90 active:scale-95 transition-all duration-150"
-            >
-              Join the beta
-            </a>
+            <JoinBetaButton className="inline-flex items-center justify-center bg-white text-black font-semibold text-sm px-6 py-2.5 rounded-full hover:bg-white/90 active:scale-95 transition-all duration-150" />
           </div>
 
         </div>

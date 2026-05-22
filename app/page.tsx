@@ -2,6 +2,7 @@ import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import FeatureGrid from "@/components/FeatureGrid";
 import Ticker from "@/components/Ticker";
+import JoinBetaButton from "@/components/JoinBetaButton";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 const BristolMap = dynamic(() => import("@/components/BristolMap"), { ssr: false });
@@ -26,14 +27,7 @@ export default function HomePage() {
             <p className="text-scene-muted text-base max-w-sm leading-relaxed">
               Available now on TestFlight for iOS.
             </p>
-            <a
-              href="https://testflight.apple.com/join/jKXRVhSz"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-2 inline-flex items-center justify-center bg-white text-black font-semibold text-sm px-6 py-2.5 rounded-full hover:bg-white/90 active:scale-95 transition-all duration-150"
-            >
-              Join the beta
-            </a>
+            <JoinBetaButton className="mt-2 inline-flex items-center justify-center bg-white text-black font-semibold text-sm px-6 py-2.5 rounded-full hover:bg-white/90 active:scale-95 transition-all duration-150" />
           </div>
         </section>
       </main>
