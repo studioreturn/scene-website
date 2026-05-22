@@ -1,54 +1,10 @@
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import FeatureGrid from "@/components/FeatureGrid";
+import Ticker from "@/components/Ticker";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 const BristolMap = dynamic(() => import("@/components/BristolMap"), { ssr: false });
-
-const VENUES = [
-  "The Fleece",
-  "Trinity",
-  "Exchange",
-  "The Croft",
-  "SWX",
-  "Marble Factory",
-  "The Prospect Building",
-  "Shredenhams",
-  "Thekla",
-  "Rough Trade Bristol",
-  "The Louisiana",
-  "Roundhouse",
-  "Brudenell Social Club",
-  "O2 Academy Brixton",
-  "Gorilla",
-  "The Lexington",
-  "Scala",
-  "Underworld",
-  "MOTH Club",
-  "KOKO",
-  "The Cab",
-  "New Cross Inn",
-  "Electric Ballroom",
-];
-
-function Ticker() {
-  const items = [...VENUES, ...VENUES];
-  return (
-    <div className="border-y border-scene-border py-4 overflow-hidden" style={{ background: "#080808" }}>
-      <div
-        className="flex whitespace-nowrap"
-        style={{ animation: "marquee 60s linear infinite", width: "max-content", willChange: "transform" }}
-      >
-        {items.map((venue, i) => (
-          <span key={i} className="inline-flex items-center flex-shrink-0">
-            <span className="text-scene-muted text-sm font-medium px-6">{venue}</span>
-            <span className="text-scene-separator select-none">·</span>
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 export default function HomePage() {
   return (
