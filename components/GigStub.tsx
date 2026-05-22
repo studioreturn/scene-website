@@ -58,7 +58,7 @@ export default function GigStub({ gig }: GigStubProps) {
       <div
         className="absolute rounded-full z-10 pointer-events-none"
         style={{
-          width: NOTCH_D, height: NOTCH_D, backgroundColor: "#0A0A0A",
+          width: NOTCH_D, height: NOTCH_D, backgroundColor: "#000000",
           top: 0, right: STUB_W,
           transform: "translateX(50%) translateY(-50%)",
         }}
@@ -66,7 +66,7 @@ export default function GigStub({ gig }: GigStubProps) {
       <div
         className="absolute rounded-full z-10 pointer-events-none"
         style={{
-          width: NOTCH_D, height: NOTCH_D, backgroundColor: "#0A0A0A",
+          width: NOTCH_D, height: NOTCH_D, backgroundColor: "#000000",
           bottom: 0, right: STUB_W,
           transform: "translateX(50%) translateY(50%)",
         }}
@@ -126,7 +126,7 @@ export default function GigStub({ gig }: GigStubProps) {
 
         {/* Perforated stub */}
         <div
-          className="relative flex-shrink-0 flex items-center justify-center"
+          className="relative flex-shrink-0 flex flex-col items-center justify-between py-3"
           style={{ width: STUB_W }}
         >
           {/* Perforation dashes */}
@@ -136,9 +136,18 @@ export default function GigStub({ gig }: GigStubProps) {
               left: 0,
               width: 1,
               background:
-                "repeating-linear-gradient(to bottom, #0A0A0A 0px, #0A0A0A 4px, transparent 4px, transparent 9px)",
+                "repeating-linear-gradient(to bottom, #000000 0px, #000000 4px, transparent 4px, transparent 9px)",
             }}
           />
+          {/* Music note */}
+          <svg
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="w-4 h-4 text-[#636366]"
+            aria-hidden="true"
+          >
+            <path d="M9 3v11.5a3.5 3.5 0 1 0 1 2.45V8h5V3H9z" />
+          </svg>
           <span
             className="text-[#3A3A3C] text-[7px] font-bold tracking-widest select-none"
             style={{ writingMode: "vertical-rl" }}

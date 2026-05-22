@@ -3,8 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --background: #0A0A0A;
-  --foreground: #EDEDED;
+  --background: #000000;
+  --foreground: #FFFFFF;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 * {
@@ -12,8 +16,8 @@
 }
 
 body {
-  background-color: #0A0A0A;
-  color: #EDEDED;
+  background-color: #000000;
+  color: #FFFFFF;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -22,4 +26,14 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* Override border-scene-border here so changes hot-reload without server restart */
+.border-scene-border {
+  border-color: #1a1a1a;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }

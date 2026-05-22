@@ -172,7 +172,7 @@ export default function ProfileCard({ data }: ProfileCardProps) {
                 style={{
                   height: 220,
                   background:
-                    "linear-gradient(to bottom, transparent 0%, #0A0A0A 65%)",
+                    "linear-gradient(to bottom, transparent 0%, #000000 65%)",
                 }}
               />
             </div>

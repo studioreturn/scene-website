@@ -42,7 +42,7 @@ export default function PrivacyPage() {
             meantime, please contact us at{" "}
             <a
               href="mailto:hello@ourscene.uk"
-              className="text-scene-accent hover:opacity-80 transition-opacity"
+              className="text-white underline underline-offset-4 hover:opacity-70 transition-opacity"
             >
               hello@ourscene.uk
             </a>

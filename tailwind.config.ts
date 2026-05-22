@@ -10,11 +10,12 @@ const config: Config = {
     extend: {
       colors: {
         scene: {
-          bg: "#0A0A0A",
-          surface: "#1A1A1A",
-          accent: "#C8F53A",
-          muted: "#737373",
-          border: "#333333",
+          bg: "#000000",
+          surface: "#1C1C1E",
+          "surface-2": "#2C2C2E",
+          muted: "#8E8E93",
+          border: "#0d0d0d",
+          separator: "#3A3A3C",
         },
       },
       borderRadius: {

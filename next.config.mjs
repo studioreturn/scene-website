@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  transpilePackages: ["mapbox-gl"],
   // Allow remote images from Supabase storage (for user avatars).
   // TODO: Add any other image host domains if avatars are served from a CDN.
   images: {
