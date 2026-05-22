@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { QRCodeSVG } from "qrcode.react";
 
 const TESTFLIGHT_URL = "https://testflight.apple.com/join/jKXRVhSz";
@@ -47,9 +48,9 @@ export default function JoinBetaButton({ className }: { className?: string }) {
         Join the beta
       </button>
 
-      {showModal && (
+      {showModal && createPortal(
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 z-[200] flex items-center justify-center p-4"
           onClick={closeModal}
         >
           {/* Backdrop */}
@@ -88,7 +89,8 @@ export default function JoinBetaButton({ className }: { className?: string }) {
               Scan the QR code to sign up,<br />or visit <a href="/beta" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:opacity-70 transition-opacity">ourscene.uk/beta</a>.
             </p>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
