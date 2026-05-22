@@ -47,7 +47,7 @@ export default function FeatureGrid() {
               <div
                 className="order-2 lg:order-none flex-shrink-0 mx-auto lg:mx-0"
                 style={{
-                  width: "min(200px, 55vw)",
+                  width: "min(260px, 65vw)",
                   transform: f.reverse ? "rotate(2deg)" : "rotate(-2deg)",
                 }}
               >
