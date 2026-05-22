@@ -28,16 +28,18 @@ export default function BristolMap() {
     map.on("load", () => {
       map.getStyle().layers.forEach((layer) => {
         if (layer.type === "symbol") {
-          // Remove all labels / icons
           map.removeLayer(layer.id);
         } else if (layer.type === "background") {
-          // Make the base background pure black to match the site
           map.setPaintProperty(layer.id, "background-color", "#000000");
         } else if (layer.type === "fill" && !layer.id.includes("water")) {
-          // Make all non-water land fills pure black
           map.setPaintProperty(layer.id, "fill-color", "#000000");
         }
       });
+
+      // Reveal the map only after overrides are applied
+      if (containerRef.current) {
+        containerRef.current.style.opacity = "1";
+      }
     });
 
     mapRef.current = map;
@@ -47,7 +49,15 @@ export default function BristolMap() {
   return (
     <div
       ref={containerRef}
-      style={{ position: "absolute", inset: 0, width: "100%", height: "100%", zIndex: 0 }}
+      style={{
+        position: "absolute",
+        inset: 0,
+        width: "100%",
+        height: "100%",
+        zIndex: 0,
+        opacity: 0,
+        transition: "opacity 0.4s ease",
+      }}
     />
   );
 }
