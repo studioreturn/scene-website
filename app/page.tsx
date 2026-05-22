@@ -1,7 +1,6 @@
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import FeatureGrid from "@/components/FeatureGrid";
-import AppStoreButton from "@/components/AppStoreButton";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 const BristolMap = dynamic(() => import("@/components/BristolMap"), { ssr: false });

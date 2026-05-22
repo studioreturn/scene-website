@@ -1,4 +1,3 @@
-import AppStoreButton from "./AppStoreButton";
 import Image from "next/image";
 
 function PhoneShot({

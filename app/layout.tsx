@@ -11,7 +11,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Scene - The home of live music",
   description:
-    "The shared calendar for all of your gigs. Import or scan tickets automatically, collect stubs and review shows.",
+    "The shared gig calendar for you and your friends. Import or scan tickets automatically, collect stubs and review shows.",
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://ourscene.uk"),
   icons: {
     icon: "/scene-logo.svg",
@@ -21,25 +21,16 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Scene - The home of live music",
     description:
-      "The shared calendar for all of your gigs. Import or scan tickets automatically, collect stubs and review shows.",
+      "The shared gig calendar for you and your friends. Import or scan tickets automatically, collect stubs and review shows.",
     url: "https://ourscene.uk",
     siteName: "Scene",
-    images: [
-      {
-        url: "/og-default.png",
-        width: 1200,
-        height: 630,
-        alt: "Scene - The home of live music",
-      },
-    ],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "Scene - The home of live music",
     description:
-      "The shared calendar for all of your gigs. Import or scan tickets automatically, collect stubs and review shows.",
-    images: ["/og-default.png"],
+      "The shared gig calendar for you and your friends. Import or scan tickets automatically, collect stubs and review shows.",
   },
   // TODO: Add the Smart App Banner once the app is live on the App Store.
   // Uncomment and fill in the App Store ID from App Store Connect → App Information:
